@@ -9,7 +9,7 @@ exports.postSignUpUser = async (req, res, next) => {
     const mobile = req.body.mobile;
     const password = req.body.password;
     try{
-        const user = await User.findOne({ where: { email: email} , where:{ mobile:mobile }})
+        const user = await User.findOne({ where:{ mobile: mobile }})
         if (user.email === email || user.mobile === mobile) {
             return res.status(409).json({ error: "User already exists" });
         }
