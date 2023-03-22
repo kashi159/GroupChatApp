@@ -19,7 +19,7 @@ async function onSubmit(e){
             if(response.status === 200){
                 localStorage.setItem('token', response.data.token)
                 alert('Login Success!!!')
-                window.location.href = "../GroupChat/index.html"
+                window.location.href = "../GroupChat/chat.html"
             }else{
                 throw new Error('Failed to login')
             }

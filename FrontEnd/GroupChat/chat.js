@@ -8,22 +8,16 @@ const token = localStorage.getItem('token')
 
 window.addEventListener("DOMContentLoaded", async () => {
   try {
-    const users = await axios.get(`http://localhost:3000/chat/users`, {
-      headers: {
-        "Authorization": token
-      }
-    });
-    const chats = await axios.get(`http://localhost:3000/chat/chats`, {
-        headers: {
-            "Authorization": token
-        }
-    });
+    const users = await axios.get(`http://localhost:3000/chat/users`, { headers: {"Authorization" : token }});
     users.data.forEach((user) => {
       showUsers(user);
     });
-    chats.data.forEach((chat)=>{
-        showchats(chat);
-    })
+    // const chats = await axios.get(`http://localhost:3000/chat/chats`, { headers: {"Authorization" : token }});
+    // console.log(chats)
+    // chats.data.forEach((chat) => {
+    //   showchats(chat);
+    // });
+
   } catch (err) {
     console.error(err);
   }
@@ -44,14 +38,16 @@ async function sendChat(e){
     e.preventDefault()
     try{
         const newChat = {
-            text: chatMsg.value
+            message: chatMsg.value
         }
         const response = await axios.post('http://localhost:3000/chat/chats', newChat,{
              headers: {
                 "Authorization" : token 
             }
         });
+        // console.log(response)
         showchats(response.data)
+        chatMsg.value ='';
     }catch (err){
         console.log(err)
     }
@@ -73,7 +69,7 @@ function showchats(chat) {
     const li = document.createElement('li');
     li.className= 'list-group-item'
     // li.setAttribute('id', chat.id);
-    const textNode= `${chat.text}`
+    const textNode= `${chat.name}: ${chat.response.message}`
     li.appendChild(document.createTextNode(textNode));
     chatBox.appendChild(li);
 }
