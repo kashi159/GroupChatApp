@@ -20,7 +20,7 @@ async function onSubmit(e){
             console.log(response)
             if(response.status === 200){
                 alert("Successfuly signed up.")
-                // window.location.href = "../Login/login.html"
+                window.location.href = "../Login/login.html"
             }else{
                 throw new Error('Failed to login')
             }

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Group Chat | signUp</title>
+    <title>Group Chat | Login</title>
     <link
       href="https://fonts.googleapis.com/css?family=Raleway"
       rel="stylesheet"
@@ -14,39 +14,32 @@
   <body>
     <div id="container">
       <div class="form-wrap">
-        <h1>Sign Up</h1>
-        <p>It's free and only takes a minute</p>
-        <form class="signup-form">
+        <h1>LogIn</h1>
+        <p>Already have an account?</p>
+        <form class="login-form">
           <div class="msg"></div>
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" name="name" id="name" required>
-          </div>
           <div class="form-group">
             <label for="email">Email</label>
             <input type="email" name="email" id="email" autocomplete="username" required>
           </div>
           <div class="form-group">
-            <label for="mobile">Mobile No.</label>
-            <input type="number" name="mobile" id="mobile" required>
-          </div>
-          <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" name="pasword" id="password" autocomplete="new-password" required>
+            <input type="password" name="password" id="password" autocomplete="current-password" required>
           </div>
-          <button type="submit" class="btn">Sign Up</button>
+          <button type="submit" class="btn">Login</button>
+          <button id="forgot-password" style="margin-top: 5px;">Forgot Password?</button>
           <p class="bottom-text">
-            By clicking the Sign Up button, you agree to our
+            By clicking the LogIn button, you agree to our
             <a href="#">Terms & Conditions</a> and
             <a href="#">Privacy Policy</a>
           </p>
         </form>
       </div>
       <footer>
-        <p>Already have an account? <a href="../Login/login.html">Login Here</a></p>
+        <p>Don't have an account? <a href="../SignUp/signup.html">SignUp Here</a></p>
       </footer>
     </div>
-    <script src="signup.js"></script>
+    <script src="login.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </body>
 </html>
