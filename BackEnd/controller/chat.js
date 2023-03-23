@@ -61,7 +61,7 @@ exports.getNewChat = async (req, res, next) => {
                    FROM userchats
                    JOIN users ON userchats.userId = users.id
                    WHERE userchats.id > ?
-                   ORDER BY userchats.id `;
+                   ORDER BY userchats.id ASC`;
     const results = await sequelize.query(query, { replacements: [lastMessageId], type: QueryTypes.SELECT });
 
     if (results.length > 0) {
