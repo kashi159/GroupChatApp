@@ -32,7 +32,6 @@ exports.getUsers = async (req, res, next) => {
       res.status(200).json({ message, name });
     } catch (err) {
       console.log(err);
-      // Send an error response
       return res.status(500).json({ error: 'Error posting chat' });
     }
   }
@@ -42,7 +41,9 @@ exports.getUsers = async (req, res, next) => {
       const results = await sequelize.query(
         `SELECT userchats.message, users.name
          FROM userchats
-         JOIN users ON userchats.userId = users.id`
+         JOIN users ON userchats.userId = users.id
+         ORDER BY userchats.id ASC`
+         
       );
     //   console.log(JSON.stringify(results[0], null, 2));
       return res.json(results[0]);

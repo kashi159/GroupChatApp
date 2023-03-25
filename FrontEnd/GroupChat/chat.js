@@ -32,7 +32,7 @@ async function chatRefresh(){
   try{
     setInterval(async ()=>{
       const chats = await axios.get(`http://localhost:3000/chat/newchats`, { headers: {"Authorization" : token }});
-    console.log(chats)
+    // console.log(chats)
     chats.data.forEach((chat) => {
       showchats(chat);
     });
@@ -61,9 +61,9 @@ async function sendChat(e){
                 "Authorization" : token 
             }
         });
-        console.log(response.data)
+        // console.log(response.data)
         showchats(response.data)
-        // chatRefresh();
+        chatRefresh();
         chatMsg.value ='';
         chatBox.scrollTop = chatBox.scrollHeight;
     }catch (err){
