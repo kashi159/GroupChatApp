@@ -181,7 +181,8 @@ async function showUsers(user) {
            "Authorization" : token 
        }
       })
-      console.log(response)
+      // console.log(response)
+      window.location.reload()
     }catch(err){
       console.log(err)
     }
