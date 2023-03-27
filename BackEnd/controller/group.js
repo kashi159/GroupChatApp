@@ -55,3 +55,29 @@ exports.postGroup = async (req, res, next) => {
     });
   }
 };
+
+exports.getUser = async (req, res, next) => {
+  const groupId = req.params.groupId;
+
+  try {
+    const users = await User.findAll({
+      include: [
+        {
+          model: Group,
+          where: { id: groupId },
+          attributes: [],
+          through: {
+            attributes: []
+          }
+        }
+      ],
+      attributes: ['id', 'name']
+    });
+    // console.log(users)
+    res.status(200).json(users);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: 'Error getting users' });
+  }
+};
+

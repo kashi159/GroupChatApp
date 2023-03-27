@@ -45,17 +45,7 @@ exports.getChat = async (req, res, next) => {
   }
 };
 
-// exports.getUser = async (req, res, next) => {
-//   const userId = req.params.userId;
 
-//   try {
-//     const user = await User.findOne({ where: { id: userId } });
-//     res.status(200).json(user);
-//   } catch (err) {
-//     console.log(err);
-//     res.status(500).json({ error: 'Error getting user' });
-//   }
-// };
 
 let lastMessageId = 0;
 
