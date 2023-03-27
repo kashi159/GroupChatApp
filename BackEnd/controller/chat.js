@@ -1,79 +1,82 @@
 const User = require('../models/user');
-const Chat = require('../models/chats')
+const Chat = require('../models/chats');
+const Group = require('../models/group');
+const UserGroups = require('../models/groupUser')
 const sequelize = require('../util/database');
 const { QueryTypes } = require('sequelize');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 
-exports.getUsers = async (req, res, next) => {
-    try {
-      const users = await User.findAll();
-      return res.json(users);
-    } catch (err) {
-      console.log(err);
-      return res.status(500).json({ error: 'Error getting users' });
-    }
-  }
+exports.postChat = async (req, res, next) => {
+  const msg  = req.body.message;
+  const userId = req.user.id;
+  const groupId = req.params.groupId;
+  console.log(groupId)
 
-  exports.postChat = async (req, res, next) => {
-    const msg = req.body.message;
-    console.log(msg);
-    let transact;
-    try {
-      transact = await sequelize.transaction();
-      const response = await Chat.create({
-        message: msg,
-        userId: req.user.id
-      }, { transaction: transact });
-      await transact.commit();
-      const id = response.userId;
-      const user = await User.findByPk(id);
-      const name = user.name;
-      const message = response.message
-      res.status(200).json({ message, name });
-    } catch (err) {
-      console.log(err);
-      return res.status(500).json({ error: 'Error posting chat' });
-    }
-  }
-
-  exports.getChat = async (req, res, next) => {
-    try {
-      const results = await sequelize.query(
-        `SELECT userchats.message, users.name
-         FROM userchats
-         JOIN users ON userchats.userId = users.id
-         ORDER BY userchats.id ASC`
-         
-      );
-    //   console.log(JSON.stringify(results[0], null, 2));
-      return res.json(results[0]);
-    } catch (err) {
-      console.log(err);
-      return res.status(500).json({ error: 'Error getting chat' });
-    }
-  }
-
-
-  let lastMessageId = 0;
-
-exports.getNewChat = async (req, res, next) => {
   try {
-    const query = `SELECT userchats.id, userchats.message, users.name
-                   FROM userchats
-                   JOIN users ON userchats.userId = users.id
-                   WHERE userchats.id > ?
-                   ORDER BY userchats.id ASC`;
-    const results = await sequelize.query(query, { replacements: [lastMessageId], type: QueryTypes.SELECT });
-
-    if (results.length > 0) {
-      lastMessageId = results[results.length - 1].id; 
-    }
-    console.log(results)
-    return res.json(results);
+    const user = await User.findByPk(userId);
+    const name = user.name;
+    const chat = await Chat.create({
+      message: msg,
+      groupId: groupId,
+      userId: userId
+    });
+    const message = chat.message
+    res.status(201).json({message, user});
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ error: 'Error getting chat' });
+    res.status(500).json({ error: 'Error posting chat' });
   }
 };
+
+exports.getChat = async (req, res, next) => {
+  const groupId = req.params.groupId;
+
+  try {
+    const chats = await Chat.findAll({
+      where: { groupId: groupId },
+      include: [{ model: User, attributes: ['id', 'name'] }]
+    });
+    res.status(200).json(chats);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: 'Error getting chat' });
+  }
+};
+
+// exports.getUser = async (req, res, next) => {
+//   const userId = req.params.userId;
+
+//   try {
+//     const user = await User.findOne({ where: { id: userId } });
+//     res.status(200).json(user);
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json({ error: 'Error getting user' });
+//   }
+// };
+
+let lastMessageId = 0;
+
+exports.getNewChat = async (req, res, next) => {
+  const groupId = req.params.groupId;
+
+  try {
+    const chats = await Chat.findAll({
+      where: { groupId: groupId, id: { [Op.gt]: lastMessageId } },
+      include: [{ model: User, attributes: ['id', 'name'] }],
+      order: [['id', 'ASC']]
+    });
+    if (chats.length > 0) {
+      lastMessageId = chats[chats.length - 1].id;
+    }
+    res.status(200).json(chats);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: 'Error getting chat' });
+  }
+};
+
 
   
