@@ -53,7 +53,7 @@ picBtn.addEventListener('click', function(e) {
   socket.emit('sendChat', {
     groupId: currentGroupId,
     userName: currentUser,
-    file: formData
+    file: file
   }, (error) => {
     if (error) {
       console.error(error);
