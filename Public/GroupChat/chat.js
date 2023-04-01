@@ -188,7 +188,7 @@ async function addNewGroup(e){
         "Authorization" : token 
       }
       })
-    // console.log(response)
+    console.log(response)
     showGroup(newgroup)
     }catch(err){
       console.log(err)

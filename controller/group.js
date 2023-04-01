@@ -31,7 +31,7 @@ exports.getGroup = async (req, res, next) => {
 exports.postGroup = async (req, res, next) => {
   const groupName = req.body.name;
   const userId = req.user.id;
-
+  console.log(groupName)
   try {
     const group = await Group.create({
       name: groupName,
