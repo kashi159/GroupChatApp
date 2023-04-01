@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../util/userDatabase');
+const sequelize = require('../util/database');
 
 const File = sequelize.define('filelinks', {
     id: {
