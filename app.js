@@ -40,7 +40,7 @@ io.on('connection', (socket) => {
         messageData.file = fileData;
       }
       // Save the message to the database and emit it to all connected clients
-      saveMessageToDatabase(messageData);
+      // saveMessageToDatabase(messageData);
       io.in(data.groupId).emit('newChat', messageData);
     });
   
