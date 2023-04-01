@@ -210,6 +210,7 @@ async function showGroup(group) {
 function showchats(chat) {
   const li = document.createElement('li');
   li.className = 'list-group-item';
+  console.log(chat)
 
   if (chat.file) {
     const fileLink = document.createElement('a');

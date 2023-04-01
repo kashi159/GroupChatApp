@@ -61,6 +61,7 @@ io.on('connection', (socket) => {
         console.log(s3Result);
     
         fileData.fileUrl = s3Result.Location;
+        messageData.fileData
       }
     
       // Save the message to the database and emit it to all connected clients
