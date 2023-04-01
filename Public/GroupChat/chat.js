@@ -221,7 +221,8 @@ function showchats(chat) {
     const fileLink = document.createElement('a');
     fileLink.href = chat.file.fileUrl;
     fileLink.textContent = chat.file.fileUrl;
-    li.appendChild(fileLink);
+    const textNode = `${chat.userName}: ${<a>fileLink</a>}`
+    li.appendChild(document.createTextNode(textNode));
   } else {
     const textNode = `${chat.userName}: ${chat.message}`;
     li.appendChild(document.createTextNode(textNode));
