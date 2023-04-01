@@ -195,23 +195,20 @@ async function showGroup(group) {
 
 
 function showchats(chat) {
-  const chatDiv = document.createElement('div');
-  chatDiv.className = 'chat';
-  const chatUser = document.createElement('div');
-  chatUser.className = 'chat-user';
-  chatUser.textContent = chat.userName;
-  const chatMessage = document.createElement('div');
-  chatMessage.className = 'chat-message';
-  chatMessage.textContent = chat.message;
-  chatDiv.appendChild(chatUser);
-  chatDiv.appendChild(chatMessage);
+  const li = document.createElement('li');
+  // console.log(chat)
+  li.className= 'list-group-item'
+  // li.setAttribute('id', chat.id);
+  const textNode= `${chat.user.name}:${chat.message}`
+  li.appendChild(document.createTextNode(textNode));
+  chatBox.appendChild(li);
+
   if (chat.file) {
     const fileLink = document.createElement('a');
     fileLink.href = URL.createObjectURL(chat.file.fileBuffer);
     fileLink.textContent = chat.file.fileName;
-    chatDiv.appendChild(fileLink);
+    chatBox.appendChild(fileLink);
   }
-  chatBox.appendChild(chatDiv);
 }
 
 
