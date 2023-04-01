@@ -97,14 +97,19 @@ async function sendChat(e){
 
 function showDbChats(chat) {
   const li = document.createElement('li');
-  const msg = document.createElement('a')
+  const messageLink = document.createElement('a')
+  messageLink.href = '#';
+  messageLink.textContent = chat.message;
+  messageLink.onclick = () => {
+    window.open(`${chat.message}`);
+  };
   // console.log(chat)
     li.className= 'list-group-item'
     // li.setAttribute('id', chat.id);
     const textNode= `${chat.user.name}:`
     msg.textContent = chat.message
     li.appendChild(document.createTextNode(textNode));
-    li.appendChild(msg)
+    li.appendChild(messageLink)
     chatBox.appendChild(li);
 }
 
