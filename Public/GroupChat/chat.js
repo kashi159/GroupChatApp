@@ -38,14 +38,6 @@ function chatRefresh(){
   }
 }
 
-sendBtn.addEventListener('click', function() {
-  socket.emit('sendChat', {
-    groupId: currentGroupId,
-    userName: currentUser,
-    message: chatMsg.value,
-  });
-  chatMsg.value = '';
-});
 
 picBtn.addEventListener('click', function() {
   const fileInput = document.getElementById('file-input');
