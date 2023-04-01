@@ -52,7 +52,7 @@ io.on('connection', (socket) => {
     
         const s3Params = {
           Bucket: process.env.BUCKET,
-          Key: new Date().getMinutes,
+          Key: `File${new Date().getMinutes()}`,
           Body: data.file.buffer,
           ContentType: data.file.type,
           ACL: 'public-read'
