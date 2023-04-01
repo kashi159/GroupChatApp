@@ -196,6 +196,7 @@ async function showGroup(group) {
 
 
 function showchats(chat) {
+  
   const li = document.createElement('li');
   li.className = 'list-group-item';
   const textNode = `${chat.userName}: ${chat.message}`;
@@ -204,9 +205,12 @@ function showchats(chat) {
   if (chat.file) {
     const fileLink = document.createElement('a');
     try {
+      const li = document.createElement('li');
+      li.className = 'list-group-item';
       fileLink.href = URL.createObjectURL(new Blob([chat.file.fileBuffer]));
       fileLink.textContent = chat.file.fileName;
-      li.appendChild(fileLink);
+      const textNode = `${chat.userName}: ${fileLink}`;
+      li.appendChild(document.createTextNode(textNode));
       console.log(fileLink)
     } catch (error) {
       console.error(error);
