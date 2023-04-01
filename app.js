@@ -108,8 +108,8 @@ Chat.belongsTo(User, { foreignKey: 'userId' });
 
 
 sequelize
-.sync({force: true})
-// .sync()
+// .sync({force: true})
+.sync()
 .then(result =>{
     // console.log(result);
     app.listen(process.env.PORT || 3000);

@@ -189,14 +189,14 @@ async function addNewGroup(e){
       const newgroup = {
         name: groupName.value
     }
-    console.log(newgroup)
+    // console.log(newgroup)
 
     const response = await axios.post(`http://44.235.123.187/group/newgroup`, newgroup, {
        headers: {
         "Authorization" : token 
       }
       })
-    console.log(response)
+    // console.log(response)
     showGroup(newgroup)
     }catch(err){
       console.log(err)
