@@ -199,7 +199,7 @@ function showchats(chat) {
   // console.log(chat)
   li.className= 'list-group-item'
   // li.setAttribute('id', chat.id);
-  const textNode= `${chat.user.name}:${chat.message}`
+  const textNode= `${chat.userName}:${chat.message}`
   li.appendChild(document.createTextNode(textNode));
   chatBox.appendChild(li);
 
