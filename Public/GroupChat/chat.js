@@ -73,7 +73,8 @@ async function sendChat(e){
       socket.emit('sendChat', {
         groupId: currentGroupId,
         userName: currentUser,
-        message: chatMsg.value
+        message: chatMsg.value,
+        userId: currentUser
       });
       const newChat = {
         message: chatMsg.value
@@ -110,7 +111,7 @@ logoutBtn.addEventListener('click', ()=>{
 async function loggedInUser(){
   try{
     const name =  await axios.get(`http://44.235.123.187/user/name`, { headers: {"Authorization" : token }});
-    // console.log(name)
+    console.log(name)
     currentUser = name.data
   }catch{
     console.log(err)

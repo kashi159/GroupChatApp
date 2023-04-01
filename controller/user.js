@@ -126,7 +126,7 @@ exports.getName = async(req, res, next)=>{
   try{
     const response = await User.findOne({where: {id: userId}});
     const name = response.name
-    res.status(200).json(name)
+    res.status(200).json({name, userId})
   }catch(err){
     console.log(err)
   }
