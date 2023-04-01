@@ -45,28 +45,30 @@ io.on('connection', (socket) => {
           fileSize: data.file.size,
           fileBuffer: data.file.buffer
         };
+        if (!data.file.buffer || data.file.buffer.length === 0) {
+          return console.error('File is empty or not found');
+        }
         messageData.file = fileData;
+    
+        const s3Params = {
+          Bucket: process.env.BUCKET,
+          Key: data.file.name,
+          Body: data.file.buffer,
+          ContentType: data.file.type,
+          ACL: 'public-read'
+        };
+        const s3Result = await s3.upload(s3Params).promise();
+        console.log(s3Result);
+    
+        fileData.fileUrl = s3Result.Location;
       }
-      const s3Params = {
-        Bucket: process.env.BUCKET,
-        Key: data.file.name,
-        Body: data.file.buffer,
-        ContentType: data.file.type,
-        ACL: 'public-read'
-      };
-      const s3Result = await s3.upload(s3Params).promise();
-      console.log(s3Result)
-  
-      fileData.fileUrl = s3Result.Location;
+    
       // Save the message to the database and emit it to all connected clients
       // saveMessageToDatabase(messageData);
       io.in(data.groupId).emit('newChat', messageData);
     });
-  
-    socket.on('disconnect', () => {
-      console.log('user disconnected');
-    });
-  });
+  })
+    
 
 const userRoutes = require('./router/user');
 const chatRoutes = require('./router/chats');
