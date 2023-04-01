@@ -42,6 +42,10 @@ function chatRefresh(){
 picBtn.addEventListener('click', function(e) {
   e.preventDefault()
   const fileInput = document.getElementById('file-input');
+  if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+    console.error('No file selected!');
+    return;
+  }
   const file = fileInput.files[0];
   const formData = new FormData();
   formData.append('file', file);
@@ -49,10 +53,17 @@ picBtn.addEventListener('click', function(e) {
     groupId: currentGroupId,
     userName: currentUser,
     file: formData
+  }, (error) => {
+    if (error) {
+      console.error(error);
+    } else {
+      console.log('File sent successfully!');
+    }
   });
   chatMsg.value = '';
   fileInput.value = '';
 });
+
 
 
 async function sendChat(e){
