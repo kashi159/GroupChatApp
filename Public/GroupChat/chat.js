@@ -207,6 +207,7 @@ function showchats(chat) {
       fileLink.href = URL.createObjectURL(new Blob([chat.file.fileBuffer]));
       fileLink.textContent = chat.file.fileName;
       li.appendChild(fileLink);
+      console.log(fileLink)
     } catch (error) {
       console.error(error);
     }
