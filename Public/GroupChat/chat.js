@@ -12,6 +12,7 @@ const picBtn = document.getElementById('multimedia');
 const socket = io('http://44.235.123.187:4000')
 let currentGroupId = null;
 let currentUser;
+let userId;
 let userli=[];
 
 socket.on('connect', () => {
@@ -53,7 +54,8 @@ picBtn.addEventListener('click', function(e) {
   socket.emit('sendChat', {
     groupId: currentGroupId,
     userName: currentUser,
-    file: file
+    file: file,
+    userId: userId
   }, (error) => {
     if (error) {
       console.error(error);
@@ -112,7 +114,8 @@ async function loggedInUser(){
   try{
     const name =  await axios.get(`http://44.235.123.187/user/name`, { headers: {"Authorization" : token }});
     console.log(name)
-    currentUser = name.data
+    userId = name.data.userId
+    currentUser = name.data.name
   }catch{
     console.log(err)
   }
