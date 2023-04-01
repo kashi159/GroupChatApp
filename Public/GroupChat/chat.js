@@ -39,7 +39,8 @@ function chatRefresh(){
 }
 
 
-picBtn.addEventListener('click', function() {
+picBtn.addEventListener('click', function(e) {
+  e.preventDefault()
   const fileInput = document.getElementById('file-input');
   const file = fileInput.files[0];
   const formData = new FormData();
