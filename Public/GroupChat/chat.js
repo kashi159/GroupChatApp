@@ -196,11 +196,6 @@ async function showGroup(group) {
 
 
 function showchats(chat) {
-  
-  const li = document.createElement('li');
-  li.className = 'list-group-item';
-  const textNode = `${chat.userName}: ${chat.message}`;
-  li.appendChild(document.createTextNode(textNode));
 
   if (chat.file) {
     const fileLink = document.createElement('a');
@@ -211,17 +206,20 @@ function showchats(chat) {
       fileLink.textContent = chat.file.fileName;
       const textNode = `${chat.userName}: ${fileLink}`;
       li.appendChild(document.createTextNode(textNode));
-      console.log(fileLink)
+      console.log(fileLink);
+      chatBox.appendChild(li);
     } catch (error) {
       console.error(error);
     }
   }
-
-  if (chatBox) {
+  else{
+    const li = document.createElement('li');
+    li.className = 'list-group-item';
+    const textNode = `${chat.userName}: ${chat.message}`;
+    li.appendChild(document.createTextNode(textNode));
     chatBox.appendChild(li);
-  } else {
-    console.error('chatBox element not found');
   }
+
 }
 
 
