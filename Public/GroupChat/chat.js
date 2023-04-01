@@ -215,14 +215,14 @@ async function showGroup(group) {
 function showchats(chat) {
   const li = document.createElement('li');
   li.className = 'list-group-item';
+  // console.log(chat)
 
   if (chat.file) {
     const fileLink = document.createElement('a');
     fileLink.href = chat.file.fileUrl;
-    fileLink.textContent = chat.file.fileName;
-    const textNode = `${chat.userName}: `;
+    fileLink.textContent = chat.file.fileUrl;
+    const textNode = `${chat.userName}: ${fileLink}`
     li.appendChild(document.createTextNode(textNode));
-    li.appendChild(fileLink);
   } else {
     const textNode = `${chat.userName}: ${chat.message}`;
     li.appendChild(document.createTextNode(textNode));
@@ -230,7 +230,6 @@ function showchats(chat) {
 
   chatBox.appendChild(li);
 }
-
 
 
 
