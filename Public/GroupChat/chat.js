@@ -207,7 +207,7 @@ addUser.addEventListener('click', async() => {
          "Authorization" : token 
      }
  })
-//  window.location.reload()
+ window.location.reload()
 //  console.log(response)
 showUsers(response.data)
   }catch(err){
