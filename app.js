@@ -10,6 +10,30 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json({ extended: false }));
 
+const io = require('socket.io')(3000, {
+    cors: {
+        origin: ['http://127.0.0.1:5500']
+    }
+})
+const users = {}
+
+io.on('connection', (socket) => {
+    console.log('a user connected');
+  
+    socket.on('joinRoom', (groupId) => {
+      socket.join(groupId);
+    });
+  
+    socket.on('sendChat', (chatData) => {
+        // console.log(chatData)
+      io.to(chatData.groupId).emit('newChat', chatData);
+    });
+  
+    socket.on('disconnect', () => {
+      console.log('user disconnected');
+    });
+  });
+
 const userRoutes = require('./router/user');
 const chatRoutes = require('./router/chats');
 const groupRoutes = require('./router/group');
@@ -42,7 +66,7 @@ sequelize
 .sync()
 .then(result =>{
     // console.log(result);
-    app.listen(process.env.PORT || 3000);
+    app.listen(process.env.PORT || 4000);
 })
 .catch(err =>{
     console.log(err);

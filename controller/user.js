@@ -120,3 +120,14 @@ exports.getAdmin = async(req, res, next)=>{
     console.log(err)
   }
 }
+
+exports.getName = async(req, res, next)=>{
+  const userId = req.user.id;
+  try{
+    const response = await User.findOne({where: {id: userId}});
+    const name = response.name
+    res.status(200).json(name)
+  }catch(err){
+    console.log(err)
+  }
+}

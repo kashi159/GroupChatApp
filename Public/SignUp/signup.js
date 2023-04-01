@@ -16,7 +16,7 @@ async function onSubmit(e){
                 mobile: mobileInput.value,
                 password: passwordInput.value
             }
-            const response = await axios.post('http://44.235.123.187/user/signup', newuser)
+            const response = await axios.post('http://localhost:4000/user/signup', newuser)
             console.log(response)
             if(response.status === 200){
                 alert("Successfuly signed up.")
