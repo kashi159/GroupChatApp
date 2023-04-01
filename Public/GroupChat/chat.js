@@ -39,6 +39,15 @@ function chatRefresh(){
 }
 
 sendBtn.addEventListener('click', function() {
+  socket.emit('sendChat', {
+    groupId: currentGroupId,
+    userName: currentUser,
+    message: chatMsg.value,
+  });
+  chatMsg.value = '';
+});
+
+picBtn.addEventListener('click', function() {
   const fileInput = document.getElementById('file-input');
   const file = fileInput.files[0];
   const formData = new FormData();
@@ -46,7 +55,6 @@ sendBtn.addEventListener('click', function() {
   socket.emit('sendChat', {
     groupId: currentGroupId,
     userName: currentUser,
-    message: chatMsg.value,
     file: formData
   });
   chatMsg.value = '';
