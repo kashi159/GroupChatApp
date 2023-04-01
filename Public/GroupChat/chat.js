@@ -196,31 +196,22 @@ async function showGroup(group) {
 
 
 function showchats(chat) {
+  const li = document.createElement('li');
+  li.className = 'list-group-item';
 
   if (chat.file) {
     const fileLink = document.createElement('a');
-    try {
-      const li = document.createElement('li');
-      li.className = 'list-group-item';
-      fileLink.href = URL.createObjectURL(new Blob([chat.file.fileBuffer]));
-      fileLink.textContent = chat.file.fileName;
-      const textNode = `${chat.userName}: ${fileLink}`;
-      li.appendChild(document.createTextNode(textNode));
-      console.log(fileLink);
-      chatBox.appendChild(li);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-  else{
-    const li = document.createElement('li');
-    li.className = 'list-group-item';
+    fileLink.href = chat.file.fileUrl;
+    fileLink.textContent = chat.file.fileName;
+    li.appendChild(fileLink);
+  } else {
     const textNode = `${chat.userName}: ${chat.message}`;
     li.appendChild(document.createTextNode(textNode));
-    chatBox.appendChild(li);
   }
 
+  chatBox.appendChild(li);
 }
+
 
 
 

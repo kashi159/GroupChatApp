@@ -5,6 +5,14 @@ const bodyParser = require('body-parser');
 const sequelize = require('./util/database')
 var cors = require('cors');
 require('dotenv').config();
+const AWS = require('aws-sdk');
+
+AWS.config.update({
+  accessKeyId: process.env.KEY_ID,
+  secretAccessKey: process.env.SECRET_KEY
+});
+
+const s3 = new AWS.S3();
 
 const app = express();
 app.use(cors());
@@ -24,7 +32,7 @@ io.on('connection', (socket) => {
       socket.join(groupId);
     });
   
-    socket.on('sendChat', (data) => {
+    socket.on('sendChat', async(data) => {
       const messageData = {
         groupId: data.groupId,
         userName: data.userName,
@@ -39,6 +47,15 @@ io.on('connection', (socket) => {
         };
         messageData.file = fileData;
       }
+      const s3Params = {
+        Bucket: process.env.BUCKET,
+        Key: data.file.name,
+        Body: data.file.buffer,
+        ContentType: data.file.type
+      };
+      const s3Result = await s3.upload(s3Params).promise();
+  
+      fileData.fileUrl = s3Result.Location;
       // Save the message to the database and emit it to all connected clients
       // saveMessageToDatabase(messageData);
       io.in(data.groupId).emit('newChat', messageData);
