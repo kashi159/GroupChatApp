@@ -7,7 +7,7 @@ var cors = require('cors');
 require('dotenv').config();
 const AWS = require('aws-sdk');
 // const File = require('./models/files')
-const Chat = require('./models/chats')
+
 
 AWS.config.update({
   accessKeyId: process.env.KEY_ID,
