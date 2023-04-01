@@ -72,8 +72,6 @@ io.on('connection', (socket) => {
         messageData.fileData
       }
     
-      // Save the message to the database and emit it to all connected clients
-      // saveMessageToDatabase(messageData);
       io.in(data.groupId).emit('newChat', messageData);
     });
   })
@@ -102,17 +100,16 @@ Group.belongsToMany(User, { through: UserGroups, foreignKey: 'groupId' });
 
 Group.hasMany(Chat, { foreignKey: 'groupId' });
 Chat.belongsTo(Group, { foreignKey: 'groupId' });
-// File.belongsTo(Group, {foreignKey: 'groupId'})
 
 User.hasMany(Chat, { foreignKey: 'userId' });
 Chat.belongsTo(User, { foreignKey: 'userId' });
-// File.belongsTo(User, { foreignKey: 'userId'})
+
 
 
 
 sequelize
-// .sync({force: true})
-.sync()
+.sync({force: true})
+// .sync()
 .then(result =>{
     // console.log(result);
     app.listen(process.env.PORT || 3000);
