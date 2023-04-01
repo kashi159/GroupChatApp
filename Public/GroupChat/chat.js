@@ -19,7 +19,7 @@ logoutBtn.addEventListener('click', ()=>{
 
 window.addEventListener("DOMContentLoaded", async () => {
   try {
-    const groups = await axios.get(`http://34.219.38.146:3000/group/usergroup`, { headers: {"Authorization" : token }});
+    const groups = await axios.get(`http://34.219.38.146:80/group/usergroup`, { headers: {"Authorization" : token }});
     // console.log(groups)
     groups.data.forEach(async(group) => {
       showGroup(group);
@@ -42,12 +42,12 @@ chatGroup.addEventListener('click', async (event) => {
     currentGroupId = groupId;
     chatBox.innerHTML = '';
     removeFromScreen()
-    const chats = await axios.get(`http://34.219.38.146:3000/chat/chats/${groupId}`, { headers: {"Authorization" : token }});
+    const chats = await axios.get(`http://34.219.38.146:80/chat/chats/${groupId}`, { headers: {"Authorization" : token }});
     // console.log(chats)
     chats.data.forEach((chat) => {
       showchats(chat);
     });
-    const User = await axios.get(`http://34.219.38.146:3000/group/getuser/${currentGroupId}`, { headers: {"Authorization" : token }});
+    const User = await axios.get(`http://34.219.38.146:80/group/getuser/${currentGroupId}`, { headers: {"Authorization" : token }});
     // console.log(User)
     User.data.forEach(async(user) => {
       const status = await isAdmin()
@@ -77,7 +77,7 @@ async function chatRefresh(){
   try{
     setInterval(async ()=>{
       if (currentGroupId) {
-        const chats = await axios.get(`http://34.219.38.146:3000/chat/newchats/${currentGroupId}`, { headers: {"Authorization" : token }});
+        const chats = await axios.get(`http://34.219.38.146:80/chat/newchats/${currentGroupId}`, { headers: {"Authorization" : token }});
         chats.data.forEach((chat) => {
           showchats(chat);
         });
@@ -96,7 +96,7 @@ async function addNewGroup(e){
         name: groupName.value
     }
 
-    const response = await axios.post(`http://34.219.38.146:3000/group/newgroup`, newgroup, {
+    const response = await axios.post(`http://34.219.38.146:80/group/newgroup`, newgroup, {
        headers: {
         "Authorization" : token 
       }
@@ -115,7 +115,7 @@ async function sendChat(e){
         const newChat = {
             message: chatMsg.value
         }
-        const response = await axios.post(`http://34.219.38.146:3000/chat/chats/${currentGroupId}`, newChat,{
+        const response = await axios.post(`http://34.219.38.146:80/chat/chats/${currentGroupId}`, newChat,{
              headers: {
                 "Authorization" : token 
             }
@@ -182,7 +182,7 @@ async function showUsers(user) {
     try{
       var li= e.target.parentElement;
       const id = li.id;
-      const response = await axios.delete(`http://34.219.38.146:3000/user/delete/${id}/${currentGroupId}`,{
+      const response = await axios.delete(`http://34.219.38.146:80/user/delete/${id}/${currentGroupId}`,{
         headers: {
            "Authorization" : token 
        }
@@ -202,7 +202,7 @@ addUser.addEventListener('click', async() => {
     const mobile= {
       mobile: mobileInput.value
     }
-    const response = await axios.post(`http://34.219.38.146:3000/user/adduser/${currentGroupId}`, mobile,{
+    const response = await axios.post(`http://34.219.38.146:80/user/adduser/${currentGroupId}`, mobile,{
       headers: {
          "Authorization" : token 
      }
@@ -217,7 +217,7 @@ showUsers(response.data)
 
 async function isAdmin(){
   try{
-      const response = await axios.get(`http://34.219.38.146:3000/user/admin/${currentGroupId}`,{
+      const response = await axios.get(`http://34.219.38.146:80/user/admin/${currentGroupId}`,{
         headers: {
            "Authorization" : token 
        }
