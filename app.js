@@ -6,6 +6,7 @@ const sequelize = require('./util/database')
 var cors = require('cors');
 require('dotenv').config();
 const AWS = require('aws-sdk');
+const S3Services = require('../services/s3services');
 
 AWS.config.update({
   accessKeyId: process.env.KEY_ID,
@@ -51,7 +52,8 @@ io.on('connection', (socket) => {
         Bucket: process.env.BUCKET,
         Key: data.file.name,
         Body: data.file.buffer,
-        ContentType: data.file.type
+        ContentType: data.file.type,
+        ACL: 'public-read'
       };
       const s3Result = await s3.upload(s3Params).promise();
   
