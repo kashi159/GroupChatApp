@@ -5,10 +5,16 @@ const groupName = document.getElementById('create-group');
 const addBtn = document.getElementById('add-group');
 const chatGroup = document.getElementById('chat-user-group');
 const token = localStorage.getItem('token');
-const mobileInput = document.getElementById('invite-users-input')
-const addUser = document.getElementById('adduser')
+const mobileInput = document.getElementById('invite-users-input');
+const addUser = document.getElementById('adduser');
+const logoutBtn = document.getElementById('logout');
 let currentGroupId = null;
 let userli=[];
+
+logoutBtn.addEventListener('click', ()=>{
+  window.location.href = '../Login/login.html';
+  localStorage.removeItem('token');
+})
 
 
 window.addEventListener("DOMContentLoaded", async () => {
@@ -95,7 +101,7 @@ async function addNewGroup(e){
         "Authorization" : token 
       }
       })
-    console.log(response)
+    // console.log(response)
     showGroup(newgroup)
     }catch(err){
       console.log(err)
@@ -201,7 +207,7 @@ addUser.addEventListener('click', async() => {
          "Authorization" : token 
      }
  })
- window.location.reload()
+//  window.location.reload()
 //  console.log(response)
 showUsers(response.data)
   }catch(err){
