@@ -61,7 +61,7 @@ io.on('connection', (socket) => {
         const s3Result = await s3.upload(s3Params).promise();
         // console.log(s3Result);
         const link = await File.create({
-          fileUrl: s3Result.Location,
+          fileURL: s3Result.Location,
           userId: data.userId,
           groupId: data.groupId
         })
