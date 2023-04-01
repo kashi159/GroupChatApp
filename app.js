@@ -6,7 +6,8 @@ const sequelize = require('./util/database')
 var cors = require('cors');
 require('dotenv').config();
 const AWS = require('aws-sdk');
-const File = require('./models/files')
+// const File = require('./models/files')
+const Chat = require('./models/chats')
 
 AWS.config.update({
   accessKeyId: process.env.KEY_ID,
@@ -60,12 +61,12 @@ io.on('connection', (socket) => {
         };
         const s3Result = await s3.upload(s3Params).promise();
         // console.log(s3Result);
-        const link = await File.create({
-          fileURL: s3Result.Location,
+        const chat = await Chat.create({
+          message: s3Result.Location,
           userId: data.userId,
           groupId: data.groupId
         })
-        console.log(link)
+        console.log(chat)
     
         fileData.fileUrl = s3Result.Location;
         messageData.fileData
@@ -101,11 +102,11 @@ Group.belongsToMany(User, { through: UserGroups, foreignKey: 'groupId' });
 
 Group.hasMany(Chat, { foreignKey: 'groupId' });
 Chat.belongsTo(Group, { foreignKey: 'groupId' });
-File.belongsTo(Group, {foreignKey: 'groupId'})
+// File.belongsTo(Group, {foreignKey: 'groupId'})
 
 User.hasMany(Chat, { foreignKey: 'userId' });
 Chat.belongsTo(User, { foreignKey: 'userId' });
-File.belongsTo(User, { foreignKey: 'userId'})
+// File.belongsTo(User, { foreignKey: 'userId'})
 
 
 
