@@ -50,7 +50,7 @@ picBtn.addEventListener('click', function(e) {
   const file = fileInput.files[0];
   const formData = new FormData();
   formData.append('file', file);
-  console.log(formData)
+  // console.log(formData)
   socket.emit('sendChat', {
     groupId: currentGroupId,
     userName: currentUser,
@@ -113,7 +113,7 @@ logoutBtn.addEventListener('click', ()=>{
 async function loggedInUser(){
   try{
     const name =  await axios.get(`http://44.235.123.187/user/name`, { headers: {"Authorization" : token }});
-    console.log(name)
+    // console.log(name)
     userId = name.data.userId
     currentUser = name.data.name
   }catch{
@@ -186,6 +186,7 @@ async function addNewGroup(e){
       const newgroup = {
         name: groupName.value
     }
+    console.log(newgroup)
 
     const response = await axios.post(`http://44.235.123.187/group/newgroup`, newgroup, {
        headers: {
