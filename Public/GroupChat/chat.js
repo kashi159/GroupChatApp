@@ -37,7 +37,7 @@ function chatRefresh(){
   }
 }
 
-function sendChat(e){
+async function sendChat(e){
     e.preventDefault()
     try{
       socket.emit('sendChat', {
@@ -45,6 +45,15 @@ function sendChat(e){
         userName: currentUser,
         message: chatMsg.value
       });
+      const newChat = {
+        message: chatMsg.value
+    }
+    const response = await axios.post(`http://44.235.123.187/chat/chats/${currentGroupId}`, newChat,{
+         headers: {
+            "Authorization" : token 
+        }
+    });
+    // showDbChats(response.data )
       chatMsg.value = ""
       
     }catch (err){
@@ -53,6 +62,15 @@ function sendChat(e){
     
 }
 
+function showDbChats(chat) {
+  const li = document.createElement('li');
+  // console.log(chat)
+    li.className= 'list-group-item'
+    // li.setAttribute('id', chat.id);
+    const textNode= `${chat.user.name}:${chat.message}`
+    li.appendChild(document.createTextNode(textNode));
+    chatBox.appendChild(li);
+}
 
 logoutBtn.addEventListener('click', ()=>{
   window.location.href = '../Login/login.html';
@@ -93,7 +111,14 @@ chatGroup.addEventListener('click', async (event) => {
   if (groupId) {
     currentGroupId = groupId;
     chatBox.innerHTML = '';
-    removeFromScreen()
+    removeFromScreen();
+
+    const chats = await axios.get(`http://44.235.123.187/chat/chats/${groupId}`, { headers: {"Authorization" : token }});
+    // console.log(chats)
+    chats.data.forEach((chat) => {
+      showDbChats(chat);
+    });
+
     const User = await axios.get(`http://44.235.123.187/group/getuser/${currentGroupId}`, { headers: {"Authorization" : token }});
     // console.log(User)
     User.data.forEach(async(user) => {
