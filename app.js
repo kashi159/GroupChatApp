@@ -24,9 +24,24 @@ io.on('connection', (socket) => {
       socket.join(groupId);
     });
   
-    socket.on('sendChat', (chatData) => {
-        // console.log(chatData)
-      io.to(chatData.groupId).emit('newChat', chatData);
+    socket.on('sendChat', (data) => {
+      const messageData = {
+        groupId: data.groupId,
+        userName: data.userName,
+        message: data.message
+      };
+      if (data.file) {
+        const fileData = {
+          fileName: data.file.name,
+          fileType: data.file.type,
+          fileSize: data.file.size,
+          fileBuffer: data.file.buffer
+        };
+        messageData.file = fileData;
+      }
+      // Save the message to the database and emit it to all connected clients
+      saveMessageToDatabase(messageData);
+      io.in(data.groupId).emit('newChat', messageData);
     });
   
     socket.on('disconnect', () => {

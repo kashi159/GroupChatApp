@@ -8,6 +8,7 @@ const token = localStorage.getItem('token');
 const mobileInput = document.getElementById('invite-users-input');
 const addUser = document.getElementById('adduser');
 const logoutBtn = document.getElementById('logout');
+const picBtn = document.getElementById('multimedia');
 const socket = io('http://44.235.123.187:4000')
 let currentGroupId = null;
 let currentUser;
@@ -36,6 +37,22 @@ function chatRefresh(){
     console.log(err)
   }
 }
+
+sendBtn.addEventListener('click', function() {
+  const fileInput = document.getElementById('file-input');
+  const file = fileInput.files[0];
+  const formData = new FormData();
+  formData.append('file', file);
+  socket.emit('sendChat', {
+    groupId: currentGroupId,
+    userName: currentUser,
+    message: chatMsg.value,
+    file: formData
+  });
+  chatMsg.value = '';
+  fileInput.value = '';
+});
+
 
 async function sendChat(e){
     e.preventDefault()
@@ -178,14 +195,25 @@ async function showGroup(group) {
 
 
 function showchats(chat) {
-  const li = document.createElement('li');
-  // console.log(chat)
-    li.className= 'list-group-item'
-    // li.setAttribute('id', chat.id);
-    const textNode= `${chat.userName}:${chat.message}`
-    li.appendChild(document.createTextNode(textNode));
-    chatBox.appendChild(li);
+  const chatDiv = document.createElement('div');
+  chatDiv.className = 'chat';
+  const chatUser = document.createElement('div');
+  chatUser.className = 'chat-user';
+  chatUser.textContent = chat.userName;
+  const chatMessage = document.createElement('div');
+  chatMessage.className = 'chat-message';
+  chatMessage.textContent = chat.message;
+  chatDiv.appendChild(chatUser);
+  chatDiv.appendChild(chatMessage);
+  if (chat.file) {
+    const fileLink = document.createElement('a');
+    fileLink.href = URL.createObjectURL(chat.file.fileBuffer);
+    fileLink.textContent = chat.file.fileName;
+    chatDiv.appendChild(fileLink);
+  }
+  chatBox.appendChild(chatDiv);
 }
+
 
 
 
