@@ -21,6 +21,9 @@ const UserGroups = require('./models/groupUser');
 app.use('/user', userRoutes);
 app.use('/chat', chatRoutes);
 app.use('/group', groupRoutes);
+app.use((req, res) => {
+    res.sendFile(path.join(__dirname, `Public/${req.url}`))
+})
 
 
 User.belongsToMany(Group, { through: UserGroups, foreignKey: 'userId' });
