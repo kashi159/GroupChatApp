@@ -107,7 +107,7 @@ function showDbChats(chat) {
     li.className= 'list-group-item'
     // li.setAttribute('id', chat.id);
     const textNode= `${chat.user.name}:`
-    msg.textContent = chat.message
+    messageLink.textContent = chat.message
     li.appendChild(document.createTextNode(textNode));
     li.appendChild(messageLink)
     chatBox.appendChild(li);
