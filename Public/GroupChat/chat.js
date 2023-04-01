@@ -208,7 +208,8 @@ function showchats(chat) {
     const fileLink = document.createElement('a');
     fileLink.href = URL.createObjectURL(new Blob([chat.file.fileBuffer]));
     fileLink.textContent = chat.file.fileName;
-    chatBox.appendChild(fileLink);
+    li.appendChild(fileLink)
+    chatBox.appendChild(li);
   }
 }
 
