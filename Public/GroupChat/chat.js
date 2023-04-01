@@ -206,7 +206,7 @@ function showchats(chat) {
 
   if (chat.file) {
     const fileLink = document.createElement('a');
-    fileLink.href = URL.createObjectURL(chat.file.fileBuffer);
+    fileLink.href = URL.createObjectURL(new Blob([chat.file.fileBuffer]));
     fileLink.textContent = chat.file.fileName;
     chatBox.appendChild(fileLink);
   }
