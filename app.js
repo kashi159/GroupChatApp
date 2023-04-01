@@ -10,7 +10,11 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json({ extended: false }));
 
-const io = require('socket.io')(4000)
+const io = require('socket.io')(4000,{
+    cors:{
+        origin: ['http://44.235.123.187:4000']
+    }
+})
 const users = {}
 
 io.on('connection', (socket) => {
