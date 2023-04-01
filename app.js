@@ -6,6 +6,7 @@ const sequelize = require('./util/database')
 var cors = require('cors');
 require('dotenv').config();
 const AWS = require('aws-sdk');
+const File = require('./models/files')
 
 AWS.config.update({
   accessKeyId: process.env.KEY_ID,
@@ -58,7 +59,7 @@ io.on('connection', (socket) => {
           ACL: 'public-read'
         };
         const s3Result = await s3.upload(s3Params).promise();
-        console.log(s3Result);
+        // console.log(s3Result);
     
         fileData.fileUrl = s3Result.Location;
         messageData.fileData
@@ -80,6 +81,7 @@ const Chat = require('./models/chats');
 const Group = require('./models/group');
 const UserGroups = require('./models/groupUser');
 
+
 app.use('/user', userRoutes);
 app.use('/chat', chatRoutes);
 app.use('/group', groupRoutes);
@@ -93,14 +95,17 @@ Group.belongsToMany(User, { through: UserGroups, foreignKey: 'groupId' });
 
 Group.hasMany(Chat, { foreignKey: 'groupId' });
 Chat.belongsTo(Group, { foreignKey: 'groupId' });
+File.belongsTo(Group, {foreignKey: 'groupId'})
 
 User.hasMany(Chat, { foreignKey: 'userId' });
 Chat.belongsTo(User, { foreignKey: 'userId' });
+File.belongsTo(User, { foreignKey: 'userId'})
+
 
 
 sequelize
-// .sync({force: true})
-.sync()
+.sync({force: true})
+// .sync()
 .then(result =>{
     // console.log(result);
     app.listen(process.env.PORT || 3000);
