@@ -8,7 +8,7 @@ const token = localStorage.getItem('token');
 const mobileInput = document.getElementById('invite-users-input');
 const addUser = document.getElementById('adduser');
 const logoutBtn = document.getElementById('logout');
-const socket = io('http://localhost:3000')
+const socket = io('http://44.235.123.187:4000')
 let currentGroupId = null;
 let currentUser;
 let userli=[];
@@ -61,7 +61,7 @@ logoutBtn.addEventListener('click', ()=>{
 
 async function loggedInUser(){
   try{
-    const name =  await axios.get(`http://localhost:4000/user/name`, { headers: {"Authorization" : token }});
+    const name =  await axios.get(`http://44.235.123.187/user/name`, { headers: {"Authorization" : token }});
     // console.log(name)
     currentUser = name.data
   }catch{
@@ -71,7 +71,7 @@ async function loggedInUser(){
 
 window.addEventListener("DOMContentLoaded", async () => {
   try {
-    const groups = await axios.get(`http://localhost:4000/group/usergroup`, { headers: {"Authorization" : token }});
+    const groups = await axios.get(`http://44.235.123.187/group/usergroup`, { headers: {"Authorization" : token }});
     // console.log(groups)
     groups.data.forEach(async(group) => {
       showGroup(group);
@@ -94,7 +94,7 @@ chatGroup.addEventListener('click', async (event) => {
     currentGroupId = groupId;
     chatBox.innerHTML = '';
     removeFromScreen()
-    const User = await axios.get(`http://localhost:4000/group/getuser/${currentGroupId}`, { headers: {"Authorization" : token }});
+    const User = await axios.get(`http://44.235.123.187/group/getuser/${currentGroupId}`, { headers: {"Authorization" : token }});
     // console.log(User)
     User.data.forEach(async(user) => {
       const status = await isAdmin()
@@ -128,7 +128,7 @@ async function addNewGroup(e){
         name: groupName.value
     }
 
-    const response = await axios.post(`http://localhost:4000/group/newgroup`, newgroup, {
+    const response = await axios.post(`http://44.235.123.187/group/newgroup`, newgroup, {
        headers: {
         "Authorization" : token 
       }
@@ -192,7 +192,7 @@ async function showUsers(user) {
     try{
       var li= e.target.parentElement;
       const id = li.id;
-      const response = await axios.delete(`http://localhost:4000/user/delete/${id}/${currentGroupId}`,{
+      const response = await axios.delete(`http://44.235.123.187/user/delete/${id}/${currentGroupId}`,{
         headers: {
            "Authorization" : token 
        }
@@ -212,7 +212,7 @@ addUser.addEventListener('click', async() => {
     const mobile= {
       mobile: mobileInput.value
     }
-    const response = await axios.post(`http://localhost:4000/user/adduser/${currentGroupId}`, mobile,{
+    const response = await axios.post(`http://44.235.123.187/user/adduser/${currentGroupId}`, mobile,{
       headers: {
          "Authorization" : token 
      }
@@ -227,7 +227,7 @@ showUsers(response.data)
 
 async function isAdmin(){
   try{
-      const response = await axios.get(`http://localhost:4000/user/admin/${currentGroupId}`,{
+      const response = await axios.get(`http://44.235.123.187/user/admin/${currentGroupId}`,{
         headers: {
            "Authorization" : token 
        }

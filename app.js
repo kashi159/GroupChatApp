@@ -10,11 +10,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json({ extended: false }));
 
-const io = require('socket.io')(3000, {
-    cors: {
-        origin: ['http://127.0.0.1:5500']
-    }
-})
+const io = require('socket.io')(4000)
 const users = {}
 
 io.on('connection', (socket) => {
@@ -66,7 +62,7 @@ sequelize
 .sync()
 .then(result =>{
     // console.log(result);
-    app.listen(process.env.PORT || 4000);
+    app.listen(process.env.PORT || 3000);
 })
 .catch(err =>{
     console.log(err);

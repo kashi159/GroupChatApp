@@ -14,7 +14,7 @@ async function onSubmit(e){
                 email: emailInput.value,
                 password: passwordInput.value
             }
-            const response = await axios.post('http://localhost:4000/user/login', user)
+            const response = await axios.post('http://44.235.123.187/user/login', user)
             // console.log(response.data)
             if(response.status === 200){
                 localStorage.setItem('token', response.data.token)
@@ -31,7 +31,7 @@ async function onSubmit(e){
     } 
 }
 
-forgotPassword.addEventListener('click', reset)
+// forgotPassword.addEventListener('click', reset)
 
 function reset(e){
     window.location.href =  "../PasswordReset/forgetPassword.html"
