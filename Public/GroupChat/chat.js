@@ -24,7 +24,7 @@ socket.on('disconnect', () => {
 });
 
 socket.on('newChat', (chat) => {
-  if(chat.groupId=== currentGroupId){
+  if(chat.groupId === currentGroupId){
     // console.log(chat)
     showchats(chat);
   }
