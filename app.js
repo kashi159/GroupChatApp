@@ -8,6 +8,9 @@ require('dotenv').config();
 const AWS = require('aws-sdk');
 // const { instrument } = require('@socket.io/admin-ui')
 
+const app = express();
+app.use(cors());
+app.use(bodyParser.json({ extended: false }));
 
 AWS.config.update({
   accessKeyId: process.env.KEY_ID,
@@ -15,10 +18,6 @@ AWS.config.update({
 });
 
 const s3 = new AWS.S3();
-
-const app = express();
-app.use(cors());
-app.use(bodyParser.json({ extended: false }));
 
 const io = require('socket.io')(4000,{
     cors:{
