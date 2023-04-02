@@ -6,7 +6,7 @@ const sequelize = require('./util/database')
 var cors = require('cors');
 require('dotenv').config();
 const AWS = require('aws-sdk');
-const { instrument } = require('@socket.io/admin-ui')
+// const { instrument } = require('@socket.io/admin-ui')
 
 
 AWS.config.update({
@@ -22,7 +22,7 @@ app.use(bodyParser.json({ extended: false }));
 
 const io = require('socket.io')(4000,{
     cors:{
-        origin: ['http://44.235.123.187', "https://admin.socket.io"]
+        origin: ['http://44.235.123.187']
     }
 })
 
@@ -127,4 +127,4 @@ async function authenticate() {
     }
 }
  authenticate();
- instrument(io, {auth: false})
+//  instrument(io, {auth: false})
