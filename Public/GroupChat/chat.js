@@ -77,7 +77,7 @@ async function sendChat(e){
         groupId: currentGroupId,
         userName: currentUser,
         message: chatMsg.value,
-        userId: currentUser
+        userId: userId
       });
       const newChat = {
         message: chatMsg.value
