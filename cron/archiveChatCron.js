@@ -1,7 +1,7 @@
 
 const { Op } = require('sequelize');
 const Chat = require('../models/chats');
-const ArchivedChat = require('../models/archivedChat');
+const ArchivedChat = require('../models/archivedChats');
 
 async function archiveChat() {
   const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000); // 1 day ago
