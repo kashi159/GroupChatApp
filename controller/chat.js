@@ -23,7 +23,7 @@ exports.postChat = async (req, res, next) => {
       userId: userId
     });
     const message = chat.message
-    res.status(201)
+    res.status(201).json(message);
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: 'Error posting chat' });
