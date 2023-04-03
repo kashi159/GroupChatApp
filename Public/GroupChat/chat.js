@@ -280,7 +280,8 @@ function adminUser(user){
   chatGroup.appendChild(li);
 }
 
-addUser.addEventListener('click', async() => {
+addUser.addEventListener('click', async(e) => {
+  e.preventDefault()
   try{
     const mobile= {
       mobile: mobileInput.value
