@@ -53,7 +53,7 @@ io.on('connection', (socket) => {
     
         const s3Params = {
           Bucket: process.env.BUCKET,
-          Key: `File${new Date().getDate()}.jpg`,
+          Key: `File${new Date().toJSON()}.jpg`,
           Body: Buffer.from(data.file.buffer) ,
           ContentType: data.file.type,
           ACL: 'public-read'
