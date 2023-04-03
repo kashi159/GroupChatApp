@@ -9,11 +9,15 @@ const mobileInput = document.getElementById('invite-users-input');
 const addUser = document.getElementById('adduser');
 const logoutBtn = document.getElementById('logout');
 const picBtn = document.getElementById('multimedia');
-const socket = io('http://44.235.123.187:4000')
+
+const socket = io('http://44.235.123.187:4000');
 let currentGroupId = null;
 let currentUser;
 let userId;
 let userli=[];
+
+addBtn.addEventListener('click', addNewGroup);
+sendBtn.addEventListener('click', sendChat)
 
 socket.on('connect', () => {
   console.log('User connected');
@@ -38,7 +42,6 @@ function chatRefresh(){
     console.log(err)
   }
 }
-
 
 picBtn.addEventListener('click', function(e) {
   e.preventDefault()
@@ -66,8 +69,6 @@ picBtn.addEventListener('click', function(e) {
   chatMsg.value = '';
   fileInput.value = '';
 });
-
-
 
 async function sendChat(e){
     e.preventDefault()
@@ -143,8 +144,6 @@ window.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-addBtn.addEventListener('click', addNewGroup);
-sendBtn.addEventListener('click', sendChat)
 let groupId;
 
 chatGroup.addEventListener('click', async (event) => {
@@ -188,7 +187,6 @@ function removeFromScreen(){
     userli.length = 0;
 }
 
-
 async function addNewGroup(e){
     e.preventDefault()
     try{
@@ -210,7 +208,6 @@ async function addNewGroup(e){
    
 }
 
-
 async function showGroup(group) {
   const linkTab = document.createElement('a');
   linkTab.className = 'btn btn-primary btn-lg btn-block';
@@ -219,7 +216,6 @@ async function showGroup(group) {
   linkTab.appendChild(textNode);
   chatGroup.appendChild(linkTab);
 }
-
 
 function showchats(chat) {
   const li = document.createElement('li');
@@ -241,11 +237,6 @@ function showchats(chat) {
   chatBox.appendChild(li);
 }
 
-
-
-
-
-
 async function showUsers(user) {
     const li = document.createElement('li');
     li.className= 'list-group-item'
@@ -257,7 +248,7 @@ async function showUsers(user) {
     chatGroup.appendChild(li);
 }
 
- function adminUser(user){
+function adminUser(user){
   const li = document.createElement('li');
   li.className= 'list-group-item'
   li.setAttribute('id', user.id);
@@ -276,17 +267,17 @@ async function showUsers(user) {
       const id = li.id;
       const response = await axios.delete(`http://44.235.123.187/user/delete/${id}/${currentGroupId}`,{
         headers: {
-           "Authorization" : token 
-       }
+            "Authorization" : token 
+        }
       })
       // console.log(response)
       window.location.reload()
-    }catch(err){
-      console.log(err)
-    }
-  });
-    li.appendChild(removeButton);
-    chatGroup.appendChild(li);
+      }catch(err){
+        console.log(err)
+      }
+   });
+  li.appendChild(removeButton);
+  chatGroup.appendChild(li);
 }
 
 addUser.addEventListener('click', async() => {
@@ -297,14 +288,14 @@ addUser.addEventListener('click', async() => {
     const response = await axios.post(`http://44.235.123.187/user/adduser/${currentGroupId}`, mobile,{
       headers: {
          "Authorization" : token 
-     }
- })
- window.location.reload()
-//  console.log(response)
-showUsers(response.data)
+      }
+    })
+    window.location.reload()
+    //  console.log(response)
+    showUsers(response.data)
   }catch(err){
-    console.log(err)
-  }
+      console.log(err)
+    }
 });
 
 async function isAdmin(){
