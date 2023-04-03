@@ -167,7 +167,8 @@ chatGroup.addEventListener('click', async (event) => {
       const status = await isAdmin()
       if (status === 200){
         adminUser(user)
-        addUser.style.display = 'block'
+        addUser.style.display = 'block';
+        mobileInput.style.display = 'block';
       }else{
         showUsers(user);
       }
