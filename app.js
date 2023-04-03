@@ -8,6 +8,15 @@ require('dotenv').config();
 const AWS = require('aws-sdk');
 // const { instrument } = require('@socket.io/admin-ui')
 
+const cron = require('node-cron');
+const archiveChat = require('./cron/archiveChatCron');
+
+// Run the archiveChat job every night at 1:00 AM
+cron.schedule('0 1 * * *', () => {
+  archiveChat();
+});
+
+
 const app = express();
 app.use(cors());
 app.use(bodyParser.json({ extended: false }));
