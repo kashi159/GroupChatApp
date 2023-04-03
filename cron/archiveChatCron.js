@@ -1,6 +1,6 @@
 
 const { Op } = require('sequelize');
-const Chat = require('../models/chat');
+const Chat = require('../models/chats');
 const ArchivedChat = require('../models/archivedChat');
 
 async function archiveChat() {
