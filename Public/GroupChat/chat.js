@@ -10,7 +10,7 @@ const addUser = document.getElementById('adduser');
 const logoutBtn = document.getElementById('logout');
 const picBtn = document.getElementById('multimedia');
 
-const socket = io('http://44.235.123.187:4000');
+const socket = io('http://localhost:4000');
 let currentGroupId = null;
 let currentUser;
 let userId;
@@ -82,7 +82,7 @@ async function sendChat(e){
       const newChat = {
         message: chatMsg.value
     }
-    const response = await axios.post(`http://44.235.123.187/chat/chats/${currentGroupId}`, newChat,{
+    const response = await axios.post(`http://localhost:3000/chat/chats/${currentGroupId}`, newChat,{
          headers: {
             "Authorization" : token 
         }
@@ -121,7 +121,7 @@ logoutBtn.addEventListener('click', ()=>{
 
 async function loggedInUser(){
   try{
-    const name =  await axios.get(`http://44.235.123.187/user/name`, { headers: {"Authorization" : token }});
+    const name =  await axios.get(`http://localhost:3000/user/name`, { headers: {"Authorization" : token }});
     // console.log(name)
     userId = name.data.userId
     currentUser = name.data.name
@@ -132,7 +132,7 @@ async function loggedInUser(){
 
 window.addEventListener("DOMContentLoaded", async () => {
   try {
-    const groups = await axios.get(`http://44.235.123.187/group/usergroup`, { headers: {"Authorization" : token }});
+    const groups = await axios.get(`http://localhost:3000/group/usergroup`, { headers: {"Authorization" : token }});
     // console.log(groups)
     groups.data.forEach(async(group) => {
       showGroup(group);
@@ -154,13 +154,13 @@ chatGroup.addEventListener('click', async (event) => {
     chatBox.innerHTML = '';
     removeFromScreen();
 
-    const chats = await axios.get(`http://44.235.123.187/chat/chats/${groupId}`, { headers: {"Authorization" : token }});
+    const chats = await axios.get(`http://localhost:3000/chat/chats/${groupId}`, { headers: {"Authorization" : token }});
     // console.log(chats)
     chats.data.forEach((chat) => {
       showDbChats(chat);
     });
 
-    const User = await axios.get(`http://44.235.123.187/group/getuser/${currentGroupId}`, { headers: {"Authorization" : token }});
+    const User = await axios.get(`http://localhost:3000/group/getuser/${currentGroupId}`, { headers: {"Authorization" : token }});
     // console.log(User)
     User.data.forEach(async(user) => {
       const status = await isAdmin()
@@ -195,7 +195,7 @@ async function addNewGroup(e){
     }
     // console.log(newgroup)
 
-    const response = await axios.post(`http://44.235.123.187/group/newgroup`, newgroup, {
+    const response = await axios.post(`http://localhost:3000/group/newgroup`, newgroup, {
        headers: {
         "Authorization" : token 
       }
@@ -265,7 +265,7 @@ function adminUser(user){
     try{
       var li= e.target.parentElement;
       const id = li.id;
-      const response = await axios.delete(`http://44.235.123.187/user/delete/${id}/${currentGroupId}`,{
+      const response = await axios.delete(`http://localhost:3000/user/delete/${id}/${currentGroupId}`,{
         headers: {
             "Authorization" : token 
         }
@@ -286,7 +286,7 @@ addUser.addEventListener('click', async(e) => {
     const mobile= {
       mobile: mobileInput.value
     }
-    const response = await axios.post(`http://44.235.123.187/user/adduser/${currentGroupId}`, mobile,{
+    const response = await axios.post(`http://localhost:3000/user/adduser/${currentGroupId}`, mobile,{
       headers: {
          "Authorization" : token 
       }
@@ -301,7 +301,7 @@ addUser.addEventListener('click', async(e) => {
 
 async function isAdmin(){
   try{
-      const response = await axios.get(`http://44.235.123.187/user/admin/${currentGroupId}`,{
+      const response = await axios.get(`http://localhost:3000/user/admin/${currentGroupId}`,{
         headers: {
            "Authorization" : token 
        }

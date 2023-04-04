@@ -6,7 +6,7 @@ const sequelize = require('./util/database')
 var cors = require('cors');
 require('dotenv').config();
 const AWS = require('aws-sdk');
-// const { instrument } = require('@socket.io/admin-ui')
+const { instrument } = require('@socket.io/admin-ui')
 
 const cron = require('node-cron');
 const archiveChat = require('./cron/archiveChatCron');
@@ -30,7 +30,8 @@ const s3 = new AWS.S3();
 
 const io = require('socket.io')(4000,{
     cors:{
-        origin: ['http://44.235.123.187']
+        origin: ["http://127.0.0.1:5500", "https://admin.socket.io"],
+        credentials: true
     }
 })
 
@@ -113,8 +114,6 @@ User.hasMany(Chat, { foreignKey: 'userId' });
 Chat.belongsTo(User, { foreignKey: 'userId' });
 
 
-
-
 sequelize
 // .sync({force: true})
 .sync()
@@ -135,4 +134,4 @@ async function authenticate() {
     }
 }
  authenticate();
-//  instrument(io, {auth: false})
+ instrument(io, {auth: false})
