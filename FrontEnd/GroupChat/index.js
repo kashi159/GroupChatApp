@@ -8,7 +8,7 @@ const token = localStorage.getItem('token')
 
 // window.addEventListener("DOMContentLoaded", async () => {
 //   try {
-//     const groups = await axios.get(`http://localhost:3000/chat/group`, {
+//     const groups = await axios.get(`http://localhost:4000/chat/group`, {
 //       headers: {
 //         "Authorization": token
 //       }
