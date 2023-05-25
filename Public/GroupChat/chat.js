@@ -115,7 +115,7 @@ function showDbChats(chat) {
 }
 
 logoutBtn.addEventListener('click', ()=>{
-  window.location.href = '/index.html';
+  window.location.href = '../Login/login.html';
   localStorage.removeItem('token');
 })
 
