@@ -30,7 +30,8 @@ const s3 = new AWS.S3();
 
 const io = require('socket.io')(4000,{
     cors:{
-        origin: ["http://127.0.0.1:5500/","https://admin.socket.io"]
+        origin: ["http://127.0.0.1:5500","https://admin.socket.io"],
+        credentials: true
     }
 })
 
