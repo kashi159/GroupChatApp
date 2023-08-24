@@ -53,11 +53,13 @@ picBtn.addEventListener('click', function(e) {
   const file = fileInput.files[0];
   const formData = new FormData();
   formData.append('file', file);
-  // console.log(formData)
+  // console.log(file)
   socket.emit('sendChat', {
     groupId: currentGroupId,
     userName: currentUser,
     file: file,
+    fileName: file.name,
+    fileType: file.type,
     userId: userId
   }, (error) => {
     if (error) {

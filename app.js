@@ -50,9 +50,10 @@ io.on('connection', (socket) => {
         message: data.message
       };
       if (data.file) {
+        // console.log(new Date().toISOString() + data.fileName)
         const fileData = {
-          fileName: data.file.name,
-          fileType: data.file.type,
+          fileName: new Date().toISOString() + data.fileName,
+          fileType: data.fileType,
           fileSize: data.file.size,
           fileBuffer: data.file.buffer
         };
@@ -63,9 +64,9 @@ io.on('connection', (socket) => {
     
         const s3Params = {
           Bucket: process.env.BUCKET,
-          Key: `File${new Date().toJSON()}.jpg`,
+          Key: new Date().toISOString() + data.fileName,
           Body: Buffer.from(data.file.buffer) ,
-          ContentType: data.file.type,
+          ContentType: data.fileType,
           ACL: 'public-read'
         };
         const s3Result = await s3.upload(s3Params).promise();
